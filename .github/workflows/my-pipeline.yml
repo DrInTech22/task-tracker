@@ -1,0 +1,59 @@
+name: Deploy Docker Images to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Build
+      run: |
+        docker build ./backend/ -t maestrops/task-tracker-backend:latest 
+        docker build ./frontend/ -t maestrops/task-tracker-frontend:latest
+       
+    - name: Login to DockerHub
+      run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Push Docker images
+      run: |
+        docker push maestrops/task-tracker-backend:latest
+        docker push maestrops/task-tracker-frontend:latest
+
+    - name: Install SSH Key for Staging
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Staging Environment
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_INSTANCE_IP }} << 'EOF'
+        cd task-tracker
+        git pull
+        docker pull maestrops/task-tracker-backend:latest
+        docker pull maestrops/task-tracker-frontend:latest
+        docker compose up -d --no-deps --force-recreate || true 
+        docker system prune -af
+        EOF
+
+    - name: Install SSH Key for Production
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY2 }}
+
+    - name: Deploy to Production Environment
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_INSTANCE_IP2 }} << 'EOF'
+        cd task-tracker
+        git pull
+        docker pull maestrops/task-tracker-backend:latest
+        docker pull maestrops/task-tracker-frontend:latest
+        docker compose up -d --no-deps --force-recreate || true
+        docker system prune -af
+        EOF

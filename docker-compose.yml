@@ -33,7 +33,7 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      # - prometheus_data:/prometheus
+      - prometheus_data:/prometheus
     ports:
       - "9090:9090"
     command:
@@ -51,7 +51,7 @@ services:
       - "3100:3100"
     volumes:
       - ./monitoring/loki/loki-config.yml:/etc/loki/local-config.yaml
-      # - loki_data:/loki
+      - loki_data:/loki
     command: -config.file=/etc/loki/local-config.yaml
     networks:
       - app-network
@@ -75,7 +75,7 @@ services:
     volumes:
       - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
       - ./monitoring/grafana/dashboard-json:/var/lib/grafana/dashboards # dashboard json files
-      # - grafana_data:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=admin
@@ -102,7 +102,7 @@ networks:
   app-network:
     driver: bridge
 
-# volumes:
-#   prometheus_data:
-#   loki_data:
-#   grafana_data:
+volumes:
+  prometheus_data:
+  loki_data:
+  grafana_data:
