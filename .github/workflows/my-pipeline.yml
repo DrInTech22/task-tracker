@@ -45,7 +45,7 @@ jobs:
     - name: Install SSH Key for Production
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY2 }}
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy to Production Environment
       run: |
