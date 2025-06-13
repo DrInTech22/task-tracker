@@ -21,41 +21,45 @@ All codes used for this project can be found in the **frontend**, **backend** fo
 
 ### IMAGE OF BOTH PROD AND STAGING SERVERS 
 
-![alt text](<servers prod and stage image.jpg>)
+![alt text](<.assets/console-server.png>)
 
 
 ### CI PIPELINE SCREENSHOT
 
-![alt text](<deployment pipeline logs.jpg>)
+![alt text](<.assets/ci-pipeline.png>)
 
 
 ### IMAGE OF Stage Environment Server
 
-![alt text](<stage env server.jpg>)
+![alt text](<.assets/staging-server.png>)
 
 
 ### IMAGE OF Production Environment Server
 
-![alt text](<prod env server.jpg>)
+![alt text](<.assets/prod-server.png>)
 
 
 ### IMAGE OF Frontend App
 
-![alt text](<front end image.jpg>)
+![alt text](<.assets/frontend.png>)
 
 
 
-### IMAGE OF Backend Mongo DB App
+### IMAGE OF Backend App
 
-![alt text](<mongo db backend.jpg>)
+![alt text](<.assets/backend.png>)
 
 
 ### IMAGE OF Grafana Visualization
 
-![alt text](<grafana image for task.jpg>)
+![alt text](<.assets/main_graf.png>)
+![alt text](<.assets/cadvisor_graf.png>)
+![alt text](<.assets/container-graf.png>)
+![alt text](<.assets/logs_graf.png>)
+![alt text](<.assets/task_tracker_graf.png>)
 
 
 
-### IMAGE OF Prometheus Showing The Time Node Exporter Scrapped Matrics From The Node
+### IMAGE OF Prometheus Showing The Time Metrics Endpoints Configured
 
-![alt text](<prometheus image for task.jpg>)
+![alt text](<.assets/prom_graf.png>)
